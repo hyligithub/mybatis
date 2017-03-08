@@ -5,7 +5,7 @@
             useCache="false">
         <![CDATA[
 
-      select * from user t where t.userId = #{userId}
+      select t.userId,t.userName from user t where t.userId = #{id}
 
         ]]>
     </select>
@@ -13,7 +13,19 @@
     <select id="queryUsers" parameterType="User" resultType="User"
             useCache="false">
         <![CDATA[
-      select * from user t where t.username = #{userName}
+      select * from user t where t.userName = #{userName}
       ]]>
     </select>
+    
+    <insert id="insertUser" parameterType="User">
+        insert into user(userName,age,company) values(#{userName},#{age},#{company})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user set userName=#{userName},age=#{age} where userId=#{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from user where userId=#{userId}
+    </delete>
 </mapper>

@@ -9,6 +9,7 @@ public class User implements Serializable {
     private int userId;
     private String userName;
     private int age;
+    private String company;
 
     public int getUserId() {
         return userId;
@@ -32,5 +33,13 @@ public class User implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

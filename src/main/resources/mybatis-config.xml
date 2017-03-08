@@ -10,28 +10,44 @@
     <settings>
         <setting name="logImpl" value="LOG4J"/>
     </settings>
+
     <!-- 配置别名 -->
     <typeAliases>
-        <typeAlias type="com.mybatis.demo.UserDao" alias="UserDao" />
-        <typeAlias type="com.mybatis.demo.User" alias="User" />
+        <typeAlias type="com.mybatis.demo.UserDao" alias="UserDao"/>
+        <typeAlias type="com.mybatis.demo.User" alias="User"/>
     </typeAliases>
+    <typeHandlers>
+        <typeHandler javaType="java.lang.String" handler="com.mybatis.demo.MyJDBCTypeHandler"/>
+    </typeHandlers>
 
     <!-- 配置环境变量 -->
     <environments default="development">
         <environment id="development">
-            <transactionManager type="JDBC" />
+            <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="${driver}" />
-                <property name="url" value="${url}" />
-                <property name="username" value="${username}" />
-                <property name="password" value="${password}" />
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+        <!-- 我再指定一个environment -->
+        <environment id="pro">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <!-- 与上面的url不一样 -->
+                <property name="url" value="jdbc:mysql://localhost:3306/demo"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
             </dataSource>
         </environment>
     </environments>
 
     <!-- 配置mappers -->
     <mappers>
-        <mapper resource="mapper/User.xml" />
+        <mapper resource="mapper/User.xml"/>
     </mappers>
 
 </configuration>
