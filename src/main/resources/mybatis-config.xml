@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC
+        "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 指定properties配置文件， 我这里面配置的是数据库相关 -->
+    <properties resource="dbConfig.properties"></properties>
+
+    <!-- 指定Mybatis使用log4j -->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+    <!-- 配置别名 -->
+    <typeAliases>
+        <typeAlias type="com.mybatis.demo.UserDao" alias="UserDao" />
+        <typeAlias type="com.mybatis.demo.User" alias="User" />
+    </typeAliases>
+
+    <!-- 配置环境变量 -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}" />
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 配置mappers -->
+    <mappers>
+        <mapper resource="mapper/User.xml" />
+    </mappers>
+
+</configuration>
