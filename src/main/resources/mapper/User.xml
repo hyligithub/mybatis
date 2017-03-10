@@ -3,18 +3,33 @@
 <mapper namespace="com.mybatis.demo.UserDao">
     <select id="getUserById" parameterType="int" resultType="User"
             useCache="false">
-        <![CDATA[
+        select t.userId,t.userName from user t
+        <where>
+            <if test=" null != userId">
+                t.userId = #{id}
+            </if>
+        </where>
 
-      select t.userId,t.userName from user t where t.userId = #{id}
-
-        ]]>
     </select>
 
     <select id="queryUsers" parameterType="User" resultType="User"
             useCache="false">
-        <![CDATA[
-      select * from user t where t.userName = #{userName}
-      ]]>
+        select * from user t
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId >0 ">
+                t.userId = #{userId}
+            </if>
+            and t.userName = #{userName}
+        </trim>
+
+      <!--
+      <where>
+          <if test="userId >0 ">
+              t.userId = #{userId}
+          </if>
+      </where>
+      -->
+
     </select>
     
     <insert id="insertUser" parameterType="User">
@@ -22,7 +37,23 @@
     </insert>
 
     <update id="updateUser" parameterType="User">
-        update user set userName=#{userName},age=#{age} where userId=#{userId}
+        update user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null">userName=#{userName},</if>
+            <if test="age > 0 ">age=#{age}</if>
+        </trim>
+        <!--
+        <set>
+            <if test="userName != null">userName=#{userName},</if>
+            <if test="age > 0 ">age=#{age}</if>
+        </set>
+        -->
+        <where>
+            <if test="userId > 0">
+                userId=#{userId}
+            </if>
+            and company = "JD"
+        </where>
     </update>
 
     <delete id="deleteUser" parameterType="int">

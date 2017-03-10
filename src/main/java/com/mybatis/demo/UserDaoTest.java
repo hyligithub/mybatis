@@ -17,10 +17,22 @@ import java.util.Map;
 public class UserDaoTest {
     @Test
     public void testMain() throws IOException {
-        insertUser();
-        findUserById();
+//        insertUser();
+//        findUserById();
+//        queryUser();
         updateUser();
-        deleteUser();
+//        deleteUser();
+    }
+
+    public void queryUser() throws IOException {
+        SqlSession sqlSession = getSessionFactory().openSession();
+        UserDao userMapper = sqlSession.getMapper(UserDao.class);
+        User user = new User();
+//        user.setUserId(10);
+        List<User> list = userMapper.queryUsers(user);
+//        User u = list.get(0);
+        System.out.println(list.size());
+//        System.out.println(u.getUserId() + "," + u.getUserName());
     }
 
     public void findUserById() throws IOException {
@@ -53,9 +65,9 @@ public class UserDaoTest {
         SqlSession sqlSession = getSessionFactory().openSession();
         UserDao userMapper = sqlSession.getMapper(UserDao.class);
         User user1 = new User();
-        user1.setUserId(1);
-        user1.setUserName("cc");
-        user1.setAge(33);
+        user1.setUserId(8);
+        user1.setUserName("fff");
+//        user1.setAge(33);
         user1.setCompany("ali");
         userMapper.updateUser(user1);
         sqlSession.commit();
